@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { nanoid } from "nanoid";
 import css from "./ContactForm.module.css";
 
-function ContactForm({ handleSubmit }) {
+function ContactForm({ onAddContact }) {
     const initialValues = {
         name: "",
         number: "",
@@ -18,6 +19,12 @@ function ContactForm({ handleSubmit }) {
       .max(50, "Too Long!")
       .required("Required"),
     });
+
+      const handleSubmit = (values, { resetForm }) => {
+        const newContact = { ...values, id: nanoid() };
+        onAddContact(newContact);
+        resetForm();
+    };
     
     return (
         <Formik

@@ -33,6 +33,10 @@ function App() {
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
+  const addContact = (contact) => {
+        setContacts(prevContacts => [...prevContacts, contact]);
+    };
+
   const handleSubmit = (values, actions) => {
     const newContact = { ...values, id: nanoid() };
     setContacts([...contacts, newContact]);
@@ -46,7 +50,7 @@ function App() {
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm handleSubmit={handleSubmit} />
+      <ContactForm onAddContact={addContact} />
       <SearchBox value={filterValue} handleFilter={handleFilter} />
       <ContactList
         contacts={filteredContacts}
